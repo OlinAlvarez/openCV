@@ -1,3 +1,4 @@
+import math
 import matplotlib.pyplot as plt
 import dg #changed from Mark's code to just dg short for data generator
 import cv2
@@ -156,7 +157,12 @@ def preprocess(image, (lower, upper)):
     output = cv2.bitwise_and(image, image, mask = mask)
 
     return output, mask
+def findAngle(center,x,y,w,h):
+    midpoint = (x + (w / 2), y + (h/ 2))
+    angle = math.atan2(midpoint[1] - center[1],midpoint[0] - center[0])
+    return angle
 
+'''
 r = np.matrix(im[:,:,2]).sum()
 b = np.matrix(im[:,:,0]).sum()
 g = np.matrix(im[:,:,1]).sum()
@@ -164,6 +170,7 @@ print r, g, b
 red_ratio = float(r)/(b+g)
 print red_ratio
 red_val = int(red_ratio * 120)
+'''
 pimage, mask = preprocess(im,  ([0,60,60], [100, 255, 255]))
 plt.imshow(pimage)
 plt.show()
@@ -178,9 +185,6 @@ plt.imshow(edges, cmap='gray')
 plt.show()
 
 im2, contours, hierarchy = cv2.findContours(edges,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-
-
-
 copy = im.copy()
 rgb = rgb = cv2.cvtColor(copy, cv2.COLOR_BGR2RGB)
 
@@ -209,16 +213,16 @@ for x, y, w, h in boxes2:
         real_signs.append((x,y,w,h))
 
 print len(real_signs)
-
-
-
 clone = im.copy()
-
+height,width,lines = clone.shape
+print 'height = ', height
+print 'width = ', width
+center = (width/2,height/2)
 colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255), (1, 1, 1)]
 for x, y, w, h in real_signs:
-
-
     cv2.rectangle(clone, (x, y), (x+w, y+h), colors[3], 2)
+    print 'theta = ' , findAngle(center,x,y,w,h) #gives us the angle from the center
+    cv2.line(clone,center,((x+(w/2)),(y+(h/2))),(255,0,0),3)
 
 plt.imshow(cv2.cvtColor(clone, cv2.COLOR_BGR2RGB))
 plt.show()
