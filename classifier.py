@@ -7,10 +7,10 @@ import utils as ut
 import glob
 import multiscale_detect as md
 from sklearn import svm
-from random import shuffle
+import random
 #opening getting the positive and negative images.
 pos_imgs = []
-for img in glob.glob("pos_images/*.jpg"):
+for img in glob.glob("crop_buoy_pics/*.jpg"):
     n= cv2.imread(img)
     pos_imgs.append(n)
 
@@ -54,7 +54,7 @@ pdata = getFeaturesWithLabel(pos_imgs, hog, dims, 1)
 ndata = getFeaturesWithLabel(neg_imgs, hog, dims, 0)
 
 data = pdata + ndata
-shuffle(data)
+random.shuffle(data)
 
 feat, labels = map(list, zip(*data))
 feat = [x.flatten() for x in feat]
@@ -66,7 +66,7 @@ train_feat = np.array(feat[:train_size], np.float32)
 test_feat = np.array(feat[train_size: sample_size], np.float32)
 train_label = np.array(labels[:train_size])
 test_label = np.array(labels[train_size:sample_size])
-lsvm = svm.SVC(gamma=5, C=.1, kernel="linear", probability=True)
+lsvm = svm.SVC(gamma=5, C=.12, kernel="linear", probability=True)
 lsvm.fit(train_feat, train_label)
 
 print lsvm.score(train_feat, train_label)
@@ -126,9 +126,18 @@ if hardNeg:
 '''
 def resize(img, scale):
     return cv2.resize(img, (int(img.shape[1]*scale), int(img.shape[0]*scale)))
-
 #im = cv2.imread("yellow_buoy.jpg")
-im = cv2.imread("front147.jpg")
+#im = cv2.imread("front147.jpg")
+#im = cv2.imread("front145.jpg")
+
+test_imgs = []
+
+for img in glob.glob("Classifiers/y_pos/*.jpg"):
+    n= cv2.imread(img)
+    test_imgs.append(n)
+
+im = test_imgs[random.randint(0,len(test_imgs))]
+
 if im.shape[0] > 400:
     scale = 400.0/im.shape[0]
 else: scale = 1
@@ -172,17 +181,10 @@ print red_ratio
 red_val = int(red_ratio * 120)
 '''
 pimage, mask = preprocess(im,  ([0,60,60], [100, 255, 255]))
-plt.imshow(pimage)
-plt.show()
-
 imgray = cv2.cvtColor(pimage,cv2.COLOR_BGR2GRAY)
-plt.imshow(imgray, cmap='gray')
-plt.show()
 
 flag, binaryImage = cv2.threshold(imgray, 85, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU )
 edges = cv2.Canny(binaryImage, 50, 150)
-plt.imshow(edges, cmap='gray')
-plt.show()
 
 im2, contours, hierarchy = cv2.findContours(edges,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 copy = im.copy()
@@ -219,6 +221,8 @@ print 'height = ', height
 print 'width = ', width
 center = (width/2,height/2)
 colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255), (1, 1, 1)]
+
+#this draws the line from the center to the midpoint of the buoy that has been detected.
 for x, y, w, h in real_signs:
     cv2.rectangle(clone, (x, y), (x+w, y+h), colors[3], 2)
     print 'theta = ' , findAngle(center,x,y,w,h) #gives us the angle from the center
@@ -226,5 +230,3 @@ for x, y, w, h in real_signs:
 
 plt.imshow(cv2.cvtColor(clone, cv2.COLOR_BGR2RGB))
 plt.show()
-
-

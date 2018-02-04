@@ -1,3 +1,4 @@
+import math
 import cv2
 import numpy as np
 import glob
@@ -52,11 +53,19 @@ for i in range(0,6):
             path_centers.append(( center(dice[i]) , center(dice[j])))
             #path_centers.append( ( (dice[i][0] + dice[i][2] / 2, dice[i][1] + dice[i][3] / 2)  , (dice[j][0] + dice[j][2] / 2, dice[j][1] + dice[j][3] / 2)))
 print len(path_centers),path_centers
+min = 0
 
+def dist(pt):
+    return math.sqrt((pt[1][0] - pt[0][0] )**2 + (pt[1][1] - pt[0][1])**2)
+
+for i in range(1,len(path_centers)):
+    if(dist(path_centers[i]) < dist(path_centers[min])):
+        min = i
 for i in range(0,len(path_centers)):
-    cv2.line(img,path_centers[i][0],path_centers[i][1],(0,0,255),2)
-
-
+    if i == min:
+        cv2.line(img,path_centers[i][0],path_centers[i][1],(255,0,255),8)
+    else:
+        cv2.line(img,path_centers[i][0],path_centers[i][1],(0,0,255),2)
 
 
 plt.imshow(img)
