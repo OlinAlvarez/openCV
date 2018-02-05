@@ -146,8 +146,9 @@ def resize(img, scale):
     return cv2.resize(img, (int(img.shape[1]*scale), int(img.shape[0]*scale)))
 
 #im = cv2.imread("yellow_buoy.jpg")
-im = cv2.imread("front147.jpg")
+#im = cv2.imread("front147.jpg")
 #im = cv2.imread("front145.jpg")
+im = cv2.imread("pos_images/yellow_buoy1.jpg")
 
 test_imgs = []
 '''
@@ -165,12 +166,9 @@ im = resize(im, scale)
 plt.imshow(cv2.cvtColor(im, cv2.COLOR_BGR2RGB))
 plt.show()
 
-
-
 def preprocess(image, (lower, upper)):
 
     #boundary in bgr color scheme for opencv
-
     lower = np.array(lower, dtype="uint8")
     upper = np.array(upper, dtype="uint8")
 
