@@ -8,6 +8,23 @@ import glob
 import multiscale_detect as md
 from sklearn import svm
 import random
+'''
+THE COORDINATES WILL BE IN XY FORMAT
+-1 denotes left and down
+1 denotes right and up
+0 means don't move
+'''
+direction = [0,0]
+'''
+Set of colours
+0 = Green
+1 = Black
+2 = Magenta
+3 = Red
+4 = Golden Yellow
+5 = White
+'''
+colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255)]
 #opening getting the positive and negative images.
 pos_imgs = []
 for img in glob.glob("crop_buoy_pics/*.jpg"):
@@ -124,20 +141,22 @@ if hardNeg:
     print "retrain test accuracy", lsvm.score(test_feat, test_label)
     ut.printConfusionMatrix(result, test_label)
 '''
+
 def resize(img, scale):
     return cv2.resize(img, (int(img.shape[1]*scale), int(img.shape[0]*scale)))
+
 #im = cv2.imread("yellow_buoy.jpg")
-#im = cv2.imread("front147.jpg")
+im = cv2.imread("front147.jpg")
 #im = cv2.imread("front145.jpg")
 
 test_imgs = []
-
+'''
 for img in glob.glob("Classifiers/y_pos/*.jpg"):
     n= cv2.imread(img)
     test_imgs.append(n)
 
 im = test_imgs[random.randint(0,len(test_imgs))]
-
+'''
 if im.shape[0] > 400:
     scale = 400.0/im.shape[0]
 else: scale = 1
@@ -166,11 +185,6 @@ def preprocess(image, (lower, upper)):
     output = cv2.bitwise_and(image, image, mask = mask)
 
     return output, mask
-def findAngle(center,x,y,w,h):
-    midpoint = (x + (w / 2), y + (h/ 2))
-    angle = math.atan2(midpoint[1] - center[1],midpoint[0] - center[0])
-    return angle
-
 '''
 r = np.matrix(im[:,:,2]).sum()
 b = np.matrix(im[:,:,0]).sum()
@@ -208,25 +222,50 @@ for x, y, w, h in boxes2:
     window = cv2.resize(window, dims)
     feat = hog.compute(window)
     prob = lsvm.predict_proba(feat.reshape(1,-1))[0]
-#     plt.imshow(cv2.cvtColor(window, cv2.COLOR_BGR2RGB))
-#     plt.show()
-#     print prob[1]
     if prob[1] > .1:
         real_signs.append((x,y,w,h))
 
 print len(real_signs)
 clone = im.copy()
 height,width,lines = clone.shape
-print 'height = ', height
-print 'width = ', width
+
+#center (X,Y)
 center = (width/2,height/2)
-colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255), (1, 1, 1)]
+
+def get_direction(x,y,w,h):
+    print 'in get directions'
+    wPad = w / 3
+    hPad = h / 3
+    cx = center[0]
+    cy = center[1]
+    print cx, cy, x , y
+    print 'left bound', x + wPad
+    print 'right bound', x + (2 * wPad)
+    if(cx < x + wPad):
+        if(cx > x + (2 * wPad)):
+            direction[0] = 0
+        else:
+            direction[0] = 1
+    else:
+        direction[0] = -1
+    print 'up bound', y + wPad
+    print 'down bound', y + (2 * wPad)
+    if(cy > y + hPad):
+        if(cy < y + (2 * hPad)):
+            direction[1] = 0
+        else:
+            direction[1] = 1
+    else:
+        direction[1] = -1
+
 
 #this draws the line from the center to the midpoint of the buoy that has been detected.
+#we will publish infomation
 for x, y, w, h in real_signs:
     cv2.rectangle(clone, (x, y), (x+w, y+h), colors[3], 2)
-    print 'theta = ' , findAngle(center,x,y,w,h) #gives us the angle from the center
     cv2.line(clone,center,((x+(w/2)),(y+(h/2))),(255,0,0),3)
+    get_direction(x,y,w,h)
+    print 'dirs ',direction
 
 plt.imshow(cv2.cvtColor(clone, cv2.COLOR_BGR2RGB))
 plt.show()
