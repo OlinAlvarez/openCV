@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="544465f7-ee2d-4b28-8fdd-c476c5558151" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/taskManager.py" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/yellow_buoy_images/yellow_buoy_1517774041410.jpg" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/yellow_buoy_images/yellow_buoy_1517774041530.jpg" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/yellow_buoy_images/yellow_buoy_1517774041715.jpg" afterPath="" />
@@ -21,6 +20,7 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/yellow_buoy_images/yellow_buoy_1517774045355.jpg" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/yellow_buoy_images/yellow_buoy_1517774045475.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/taskManager.py" afterPath="$PROJECT_DIR$/taskManager.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -66,11 +66,9 @@
       <file leaf-file-name="taskManager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/taskManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" column="25" lean-forward="true" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="54">
+              <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -362,11 +360,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/taskManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="25" lean-forward="true" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="54">
+          <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
