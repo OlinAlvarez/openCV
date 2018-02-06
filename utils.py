@@ -18,3 +18,12 @@ def printConfusionMatrix(result, labels):
 
     print "true pos:", truePositives, "true neg:", trueNegatives, "false pos:", falsePositives, "false neg:", falseNegatives, "\n"
 
+GREEN = 0
+BLACK = 1
+MAGENTA = 2
+RED = 3
+GOLDEN_YELLOW = 4
+WHITE = 5
+BLUE = 6
+colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255),(0,0,255)]
+

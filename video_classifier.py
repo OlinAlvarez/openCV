@@ -1,3 +1,4 @@
+import utils
 import matplotlib.pyplot as plt
 import dg #changed from Mark's code to just dg short for data generator
 import cv2
@@ -151,8 +152,6 @@ while True:
 
     for x, y, w, h in boxes2:
         cv2.rectangle(rgb, (x,y),(x+w, y+h), (0, 255, 0), 2)
-    plt.imshow(rgb)
-    plt.show()
 
     real_signs = []
 
@@ -171,12 +170,9 @@ while True:
     print len(real_signs)
     clone = frame.copy()
 
-    colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255), (1, 1, 1)]
     for x, y, w, h in real_signs:
-        cv2.rectangle(clone, (x, y), (x+w, y+h), colors[3], 2)
-
-    plt.imshow(cv2.cvtColor(clone, cv2.COLOR_BGR2RGB))
-    plt.show()
+        cv2.rectangle(clone, (x, y), (x+w, y+h), utils.colors[utils.BLUE], 2)
+    cv2.imshow('frame',clone)
     if cv2.waitKey(1)  & 0xFF == ord('q'):
         break
 cap.release()

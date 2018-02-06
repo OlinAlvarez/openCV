@@ -2,7 +2,7 @@
 import cv2
 
 #default way to open camera
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 t,fr = cap.read()
 ctr = 0
 while t == False:

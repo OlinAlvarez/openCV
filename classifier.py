@@ -1,4 +1,5 @@
 import math
+import utils
 import matplotlib.pyplot as plt
 import dg #changed from Mark's code to just dg short for data generator
 import cv2
@@ -15,16 +16,6 @@ THE COORDINATES WILL BE IN XY FORMAT
 0 means don't move
 '''
 direction = [0,0]
-'''
-Set of colours
-0 = Green
-1 = Black
-2 = Magenta
-3 = Red
-4 = Golden Yellow
-5 = White
-'''
-colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255)]
 #opening getting the positive and negative images.
 pos_imgs = []
 for img in glob.glob("crop_buoy_pics/*.jpg"):
@@ -260,7 +251,7 @@ def get_direction(x,y,w,h):
 #this draws the line from the center to the midpoint of the buoy that has been detected.
 #we will publish infomation
 for x, y, w, h in real_signs:
-    cv2.rectangle(clone, (x, y), (x+w, y+h), colors[3], 2)
+    cv2.rectangle(clone, (x, y), (x+w, y+h), utils.colors[utils.MAGENTA], 2)
     cv2.line(clone,center,((x+(w/2)),(y+(h/2))),(255,0,0),3)
     get_direction(x,y,w,h)
     print 'dirs ',direction
