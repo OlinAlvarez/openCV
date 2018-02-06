@@ -33,4 +33,28 @@ GOLDEN_YELLOW = 4
 WHITE = 5
 BLUE = 6
 colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255),(0,0,255)]
-
+def get_direction(x,y,w,h):
+    print 'in get directions'
+    wPad = w / 3
+    hPad = h / 3
+    cx = center[0]
+    cy = center[1]
+    print cx, cy, x , y
+    print 'left bound', x + wPad
+    print 'right bound', x + (2 * wPad)
+    if(cx < x + wPad):
+        if(cx > x + (2 * wPad)):
+            direction[0] = 0
+        else:
+            direction[0] = 1
+    else:
+        direction[0] = -1
+    print 'up bound', y + wPad
+    print 'down bound', y + (2 * wPad)
+    if(cy > y + hPad):
+        if(cy < y + (2 * hPad)):
+            direction[1] = 0
+        else:
+            direction[1] = 1
+    else:
+        direction[1] = -1
