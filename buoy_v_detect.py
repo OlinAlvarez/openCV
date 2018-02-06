@@ -1,8 +1,8 @@
+import utils
 import math
 import buoy_classifier as bc
 import cv2
 import numpy as np
-colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255), (1, 1, 1)]
 cap = cv2.VideoCapture(1)
 hog, lsvm = bc.getHogLSVM()
 lower = [0,60,60]
@@ -22,12 +22,6 @@ def preprocess(image, (lower,upper)):
     output = cv2.bitwise_and(image, image, mask = mask)
 
     return output, mask
-
-def find_angle(center,x,y,w,h):
-    midpoint = ( x + ( w / 2), y + ( h / 2))
-    angle = math.atan2( midpoint[1] - center[1], midpoint[0] - center[0])
-    return angle
-
 def detect_buoy(im, boxes):
     true_boxes = []
     for box in boxes:
@@ -54,12 +48,11 @@ while True:
     boxes = [cv2.boundingRect(c) for c in contours]
     boxes2 = [b for b in boxes if b[2]*b[3] > 400]
     for x, y, w, h in boxes2:
-        cv2.rectangle(frame, (x,y), (x+w, y+h), colors[3], 2)
+        cv2.rectangle(frame, (x,y), (x+w, y+h), utils.colors[utils.BLUE], 2)
     clone = im.copy()
     buoys = detect_buoy(frame,boxes2)
     for x, y, w, h in buoys:
-        cv2.rectangle(clone, (x,y), (x+w,y+h), colors[3], 2)
-        print 'theta = ', find_angle(center,x,y,w,h)
+        cv2.rectangle(clone, (x,y), (x+w,y+h), utils.colors[utils.BLUE], 2)
         cv2.line(frame,center,((x+(w/2)),(y+(h/2))),(255,0,0),3)
     #cv2.imshow('edges',edges)
     #cv2.imshow('pimage',pimage)

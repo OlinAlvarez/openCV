@@ -1,3 +1,4 @@
+import math
 def printConfusionMatrix(result, labels):
     result0 = [int(x) for x in result]
 
@@ -17,6 +18,12 @@ def printConfusionMatrix(result, labels):
             falseNegatives +=1
 
     print "true pos:", truePositives, "true neg:", trueNegatives, "false pos:", falsePositives, "false neg:", falseNegatives, "\n"
+
+
+def find_angle(center,x,y,w,h):
+    midpoint = ( x + ( w / 2), y + ( h / 2))
+    angle = math.atan2( midpoint[1] - center[1], midpoint[0] - center[0])
+    return angle
 
 GREEN = 0
 BLACK = 1
