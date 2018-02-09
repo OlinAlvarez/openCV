@@ -33,7 +33,9 @@ GOLDEN_YELLOW = 4
 WHITE = 5
 BLUE = 6
 colors = [(0,255,0),(0,0,0),(255,0,255),(255,0,0),(255,165,0),(255,255,255),(0,0,255)]
-def get_direction(x,y,w,h):
+
+def get_directions(center,x,y,w,h):
+    direction = [0,0]
     print 'in get directions'
     wPad = w / 3
     hPad = h / 3
