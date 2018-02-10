@@ -63,8 +63,8 @@ class detect_buoy():
             cv2.rectangle(clone, (x,y), (x+w,y+h), utils.colors[utils.BLUE], 2)
             cv2.line(frame,center,((x+(w/2)),(y+(h/2))),(255,0,0),3)
             self.coords = utils.get_directions(center,x,y,w,h)
-        #cv2.imshow('edges',edges)
-        #cv2.imshow('pimage',pimage)
+        cv2.imshow('edges',edges)
+        cv2.imshow('pimage',pimage)
         cv2.imshow('clone',clone)
         cv2.imshow('frame',frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):

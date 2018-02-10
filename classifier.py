@@ -137,9 +137,9 @@ def resize(img, scale):
     return cv2.resize(img, (int(img.shape[1]*scale), int(img.shape[0]*scale)))
 
 #im = cv2.imread("yellow_buoy.jpg")
-#im = cv2.imread("front147.jpg")
+im = cv2.imread("front147.jpg")
 #im = cv2.imread("front145.jpg")
-im = cv2.imread("pos_images/yellow_buoy1.jpg")
+#im = cv2.imread("pos_images/yellow_buoy1.jpg")
 
 test_imgs = []
 '''
@@ -185,7 +185,7 @@ red_val = int(red_ratio * 120)
 '''
 pimage, mask = preprocess(im,  ([0,60,60], [100, 255, 255]))
 imgray = cv2.cvtColor(pimage,cv2.COLOR_BGR2GRAY)
-
+plt.imshow(pimage)
 flag, binaryImage = cv2.threshold(imgray, 85, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU )
 edges = cv2.Canny(binaryImage, 50, 150)
 

@@ -41,9 +41,9 @@ def get_directions(center,x,y,w,h):
     hPad = h / 3
     cx = center[0]
     cy = center[1]
-    print cx, cy, x , y
-    print 'left bound', x + wPad
-    print 'right bound', x + (2 * wPad)
+    #print cx, cy, x , y
+    #print 'left bound', x + wPad
+    #print 'right bound', x + (2 * wPad)
     if(cx < x + wPad):
         if(cx > x + (2 * wPad)):
             direction[0] = 0
@@ -51,8 +51,8 @@ def get_directions(center,x,y,w,h):
             direction[0] = 1
     else:
         direction[0] = -1
-    print 'up bound', y + wPad
-    print 'down bound', y + (2 * wPad)
+    #print 'up bound', y + wPad
+    #print 'down bound', y + (2 * wPad)
     if(cy > y + hPad):
         if(cy < y + (2 * hPad)):
             direction[1] = 0
